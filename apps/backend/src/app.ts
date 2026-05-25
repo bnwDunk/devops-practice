@@ -1,7 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
-import pinoHttp from 'pino-http';
+import { pinoHttp } from 'pino-http';
 import { deploymentsRouter } from './routes/deployments.js';
 import { healthRouter } from './routes/health.js';
 import { metricsRouter } from './routes/metrics.js';
@@ -31,10 +31,12 @@ export function createApp() {
     response.status(404).json({ message: 'Not found' });
   });
 
-  app.use<express.ErrorRequestHandler>((error, _request, response, _next) => {
+  const errorHandler: express.ErrorRequestHandler = (error, _request, response, _next) => {
     logger.error({ error }, 'Unhandled API error');
     response.status(500).json({ message: 'Internal server error' });
-  });
+  };
+
+  app.use(errorHandler);
 
   return app;
 }
