@@ -159,6 +159,8 @@ docker compose --profile ci up -d jenkins
 
 Jenkins local lab ใช้ custom image จาก `infra/jenkins/Dockerfile` เพื่อเพิ่ม Docker CLI และ Docker Compose plugin เข้าไปใน Jenkins controller container
 
+Smoke test ของ Jenkins ใช้ `docker-compose.ci.yml` เพิ่มจาก compose หลัก เพราะ Jenkins รันอยู่ใน container แต่ Docker daemon อยู่ด้านนอก การ bind mount ไฟล์จาก workspace เช่น Nginx config อาจชน path ฝั่ง host ได้ CI override จึง build MySQL init scripts เข้า image และไม่ start proxy ระหว่าง smoke test
+
 สิ่งที่ Jenkins agent ต้องมี:
 
 - Node.js 22 และ npm

@@ -14,6 +14,7 @@ pipeline {
   environment {
     APP_VERSION = "${env.BUILD_NUMBER}"
     COMPOSE_PROJECT_NAME = "devops-practice-${env.BUILD_NUMBER}"
+    COMPOSE_FILES = '-f docker-compose.yml -f docker-compose.ci.yml'
     MYSQL_PORT = '13306'
     PROXY_PORT = '18080'
   }
@@ -74,16 +75,16 @@ pipeline {
       }
       steps {
         script {
-          runCommand('docker compose up -d --build')
-          runCommand('docker compose exec -T backend wget -qO- http://localhost:3000/api/health')
-          runCommand('docker compose exec -T backend wget -qO- http://localhost:3000/api/deployments')
+          runCommand("docker compose ${env.COMPOSE_FILES} up -d --build mysql backend frontend")
+          runCommand("docker compose ${env.COMPOSE_FILES} exec -T backend wget -qO- http://localhost:3000/api/health")
+          runCommand("docker compose ${env.COMPOSE_FILES} exec -T backend wget -qO- http://localhost:3000/api/deployments")
         }
       }
       post {
         always {
           script {
-            runCommand('docker compose logs --tail=150')
-            runCommand('docker compose down -v --remove-orphans')
+            runCommand("docker compose ${env.COMPOSE_FILES} logs --tail=150")
+            runCommand("docker compose ${env.COMPOSE_FILES} down -v --remove-orphans")
           }
         }
       }

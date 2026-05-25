@@ -59,7 +59,9 @@ services:
     restart: unless-stopped
 
   mysql:
-    image: mysql:8.4
+    build:
+      context: .
+      dockerfile: infra/mysql/Dockerfile
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password_change_me}
       MYSQL_DATABASE: ${MYSQL_DATABASE:-devops_practice}
@@ -69,7 +71,6 @@ services:
       - "${MYSQL_PORT:-3306}:3306"
     volumes:
       - mysql-data:/var/lib/mysql
-      - ./infra/mysql/init:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u$${MYSQL_USER} -p$${MYSQL_PASSWORD} --silent"]
       interval: 10s

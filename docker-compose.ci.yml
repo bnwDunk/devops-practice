@@ -1,0 +1,4 @@
+services:
+  proxy:
+    profiles:
+      - manual-proxy

@@ -17,10 +17,11 @@ flowchart LR
 
 - `frontend`: Vite React app served by Nginx
 - `backend`: Express.js API with MySQL connection pool
-- `mysql`: MySQL 8 with init scripts, seed data, and persistent volume
+- `mysql`: MySQL 8 custom image with init scripts, seed data, and persistent volume
 - `proxy`: Nginx edge service routing `/` and `/api`
 - `adminer`: optional DB UI profile for local debugging
 - `jenkins`: optional CI server profile for local Jenkins practice
+- `docker-compose.ci.yml`: Jenkins smoke-test override that avoids host bind-mount issues
 
 ## Quick Start
 
