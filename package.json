@@ -1,0 +1,24 @@
+{
+  "name": "devops-practice-stack",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Full-stack DevOps practice project with Vite React, Express, MySQL, Docker Compose, and Nginx.",
+  "workspaces": [
+    "apps/frontend",
+    "apps/backend"
+  ],
+  "scripts": {
+    "dev:frontend": "npm run dev --workspace apps/frontend",
+    "dev:backend": "npm run dev --workspace apps/backend",
+    "build": "npm run build --workspaces",
+    "lint": "npm run lint --workspaces",
+    "typecheck": "npm run typecheck --workspaces",
+    "docker:up": "docker compose up --build",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f --tail=100",
+    "docker:clean": "docker compose down -v --remove-orphans"
+  },
+  "engines": {
+    "node": ">=20.11.0"
+  }
+}
