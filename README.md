@@ -89,6 +89,8 @@ Jenkins agent ควรมี:
 
 ```powershell
 docker compose --profile ci up -d jenkins
+getpassword 
+355a6670943b4e99a93638d083d8b855
 ```
 
 จากนั้นเปิด http://localhost:8081 แล้วสร้าง Pipeline job ที่ชี้มาที่ repo นี้
